@@ -17,10 +17,12 @@
        <el-table-column
       fixed="right"
       label="操作"
-      width="100">
+      align="center"
+      width="150">
       <template slot-scope="scope">
         <el-button @click="toReview(scope.row)" type="text" size="small">查看</el-button>
         <el-button type="text" size="small" @click="toEdit(scope.row)">编辑</el-button>
+        <el-button @click="toDelete(scope.row.id)" type="text" size="small">删除</el-button>
       </template>
     </el-table-column>
     </el-table>
@@ -37,14 +39,38 @@ export default {
    },
 
    created(){
-       request.get('http://localhost:8848/product/findAllProduct')
-       .then(result=>{
-          this.product = result.data;
-       })
+      this.reloadData();
    },
    methods:{
+       reloadData(){
+                request.get('http://localhost:8848/product/findAllProduct')
+        .then(result=>{
+            this.product = result.data;
+        })
+       },
        toReview(){
 
+       },
+       toDelete(id){
+           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          //交互
+              let url = "http://localhost:8848/product/deleteById"
+              request.get(url,{params:{id:id}})
+              .then(response=>{
+                  //通知
+                  this.$message({
+                      message:response.message,
+                      type:"success"
+                  })
+                  //重载数据
+                  this.reloadData();
+              })
+          
+        })
        },
        toEdit(record){
           this.$router.push({path:'/Product/Editor',query:record})
