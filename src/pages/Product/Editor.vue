@@ -61,6 +61,9 @@ export default {
             form:{}
         }
     },
+    created(){
+        this.form = this.$route.query;
+    },
     methods:{
         back(){
             this.$router.go(-1);

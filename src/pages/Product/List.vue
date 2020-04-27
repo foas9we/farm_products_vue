@@ -14,6 +14,15 @@
       <el-table-column prop="categoryId" label="父栏目编号"> </el-table-column>
       <el-table-column prop="userId" label="所有者编号"> </el-table-column>
       <el-table-column prop="description" label="描述信息"> </el-table-column>
+       <el-table-column
+      fixed="right"
+      label="操作"
+      width="100">
+      <template slot-scope="scope">
+        <el-button @click="toReview(scope.row)" type="text" size="small">查看</el-button>
+        <el-button type="text" size="small" @click="toEdit(scope.row)">编辑</el-button>
+      </template>
+    </el-table-column>
     </el-table>
        <!-- 分页 -->
     </div>
@@ -34,6 +43,12 @@ export default {
        })
    },
    methods:{
+       toReview(){
+
+       },
+       toEdit(record){
+          this.$router.push({path:'/Product/Editor',query:record})
+       },
        toPulishProduct(){
            //跳转到编辑农产品界面
            this.$router.push({path:'/Product/Editor'})
