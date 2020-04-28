@@ -44,8 +44,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-      return res
-    
+      return res 
   },
   error => {
     console.log('err' + error) // for debug

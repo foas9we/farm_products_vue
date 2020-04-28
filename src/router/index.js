@@ -113,7 +113,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  
+  //农产品管理路由
   {
     path: '/product',
     component: Layout,
@@ -129,6 +129,19 @@ export const asyncRoutes = [
         component: () => import('@/pages/Product/Editor'),
         name: 'product_editor',
         meta: { title: '编辑农产品', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  //栏目管理路由
+  {
+    path: '/category',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/pages/Category/List'),
+        name: 'category_list',
+        meta: { title: '栏目列表', icon: 'documentation', affix: true }
       }
     ]
   },

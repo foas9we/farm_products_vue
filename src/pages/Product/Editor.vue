@@ -5,8 +5,8 @@
         <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="发布类型">
                 <el-select v-model="form.state" placeholder="请选择发布类型">
-                    <el-option label="发布采购信息" value="2"></el-option>
-                    <el-option label="发布供货信息" value="1"></el-option>
+                    <el-option label="发布采购信息" value="采购"></el-option>
+                    <el-option label="发布供货信息" value="供货"></el-option>
                 </el-select>
         </el-form-item>
         <el-form-item label="标题">
@@ -19,12 +19,12 @@
             <el-input type="textarea" v-model="form.description" rows="5"></el-input>
         </el-form-item>
         <el-form-item label="类别">
-        <el-select v-model="form.category_id" placeholder="请选择所属栏目">
+        <el-select v-model="form.categoryId" placeholder="请选择所属栏目">
             <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="c in category"
+            :key="c.id"
+            :label="c.name"
+            :value="c.id">
             </el-option>
         </el-select>
         </el-form-item>
@@ -58,11 +58,16 @@ import qs from 'qs'
 export default {
     data(){
         return{
-            form:{}
+            form:{},
+            category:{}
         }
     },
     created(){
         this.form = this.$route.query;
+        request.get('http://localhost:8848/category/findAll')
+        .then(result=>{
+            this.category = result.data;
+        })
     },
     methods:{
         back(){

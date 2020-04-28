@@ -11,7 +11,7 @@
       <el-table-column prop="price" label="价格"> </el-table-column>
       <el-table-column prop="media" label="url地址"> </el-table-column>
       <el-table-column prop="state" label="农产品属性"> </el-table-column>
-      <el-table-column prop="categoryId" label="父栏目编号"> </el-table-column>
+      <el-table-column prop="categoryId" label="栏目编号"> </el-table-column>
       <el-table-column prop="userId" label="所有者编号"> </el-table-column>
       <el-table-column prop="description" label="描述信息"> </el-table-column>
        <el-table-column
