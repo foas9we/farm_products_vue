@@ -54,7 +54,8 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { roles, name, avatar, introduction } = data
+        const { name, userFace:avatar, introduction } = data
+        const roles = data.roles.map(item=>item.name)
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {

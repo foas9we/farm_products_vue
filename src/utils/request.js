@@ -43,7 +43,17 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    //res 后端返回的数据
     const res = response.data
+    //如果res.status==500报错
+    if(res.status != 200){
+      Message({
+        message: res.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+      return Promise.reject(res)
+    }
       return res 
   },
   error => {

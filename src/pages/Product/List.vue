@@ -43,7 +43,7 @@ export default {
    },
    methods:{
        reloadData(){
-                request.get('http://localhost:8848/product/findAllProduct')
+                request.get('/product/findAllProduct')
         .then(result=>{
             this.product = result.data;
         })
@@ -58,7 +58,7 @@ export default {
           type: 'warning'
         }).then(() => {
           //交互
-              let url = "http://localhost:8848/product/deleteById"
+              let url = "/product/deleteById"
               request.get(url,{params:{id:id}})
               .then(response=>{
                   //通知

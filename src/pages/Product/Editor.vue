@@ -19,7 +19,7 @@
             <el-input type="textarea" v-model="form.description" rows="5"></el-input>
         </el-form-item>
         <el-form-item label="类别">
-        <el-select v-model="form.categoryId" placeholder="请选择所属栏目">
+        <el-select clearable  v-model="form.categoryId" placeholder="请选择所属栏目">
             <el-option
             v-for="c in category"
             :key="c.id"
@@ -64,7 +64,7 @@ export default {
     },
     created(){
         this.form = this.$route.query;
-        request.get('http://localhost:8848/category/findAll')
+        request.get('/category/findAll')
         .then(result=>{
             this.category = result.data;
         })
@@ -77,7 +77,7 @@ export default {
             request(
                 {
                     method:"post",
-                    url:'http://localhost:8848/product/saveOrUpdateProduct',
+                    url:'/product/saveOrUpdateProduct',
                     data:qs.stringify(this.form),
                     headers:{
                         'Content-Type':'application/x-www-form-urlencoded'

@@ -33,7 +33,7 @@
                 </el-form-item>
                 
                 <el-form-item label="父栏目" label-width="80px">
-                    <el-select v-model="form.parentId" placeholder="请选择父栏目">
+                    <el-select clearable  v-model="form.parentId" placeholder="请选择父栏目">
                         <el-option v-for="c in category" :key="c.id" :label="c.name" :value="c.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -49,6 +49,7 @@
 <script>
 import request from '@/utils/request'
 import qs from 'querystring'
+// import qs from 'qs'
 export default {
     data(){
         return{
@@ -98,15 +99,27 @@ export default {
 
     //    },
     //批量删除
-    toBatchDelete(ids){
-        let url = "http://localhost:8848/category/batchDelete"
-           request.post(url,{ids:this.ids})
-           .then(response=>{
-               this.$message({
-                   message:response.message,
-                   type:"success"
-               })
-           })
+    toBatchDelete(){
+        // let url = "http://localhost:8848/category/batchDelete"
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+        //交互
+              let url = "/category/batchDelete"
+              request.post(url,this.ids)
+              .then(response=>{
+                  //通知
+                  this.$message({
+                      message:response.message,
+                      type:"success"
+                  })
+                  //重载数据
+                  this.reloadData();
+              })
+          
+        })
     },
        toDelete(id){
            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -115,7 +128,7 @@ export default {
           type: 'warning'
         }).then(() => {
           //交互
-              let url = "http://localhost:8848/category/deleteById"
+              let url = "/category/deleteById"
               request.get(url,{params:{id:id}})
               .then(response=>{
                   //通知
