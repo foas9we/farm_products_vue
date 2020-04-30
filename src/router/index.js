@@ -145,6 +145,44 @@ export const asyncRoutes = [
       }
     ]
   },
+   //用户管理路由
+   {
+    path: '/user',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/pages/User/List'),
+        name: 'user_list',
+        meta: { title: '用户列表', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  //角色管理
+  {
+    path: '/role',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/pages/Role/List'),
+        name: 'role_list',
+        meta: { title: '角色列表', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/privilege',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/pages/Privilege/List'),
+        name: 'privilege_list',
+        meta: { title: '权限列表', icon: 'documentation', affix: true }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
