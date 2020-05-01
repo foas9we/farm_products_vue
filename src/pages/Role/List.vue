@@ -13,6 +13,28 @@
                 </template>
             </el-table-column>
         </el-table>
+        <!-- 模态框 -->
+         
+        <el-dialog title="授权" :visible.sync="visible">
+            {{role.privilege}}
+            <el-form >
+            <el-form-item label="角色名" label-width="80px">
+                <strong>{{role.name}}</strong>
+            </el-form-item>
+            <el-form-item label="权限" label-width="80px">
+               <el-cascader-panel 
+                    v-model="role.privilege"
+                    :props="props"
+                    :options="privileges" 
+                    clearable />
+            </el-form-item>
+           
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="visible = false">取 消</el-button>
+                <el-button type="primary" >确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -20,24 +42,49 @@ import request from '@/utils/request'
 export default {
     data(){
         return{
-            roles:[]
+            roles:[],
+            role:{},
+            visible:false,
+            privileges:[],
+            props:{multiple: true ,label:'name',value:'id',emitPath:false},
+            ids:[]
+            
         }
     },
     created(){
         this.loadRoles();
+        this.loadPrivileges();
     },
     methods:{
         //加载角色信息
         loadRoles(){
-            request.get("/role/findAll")
+            request.get("/role/findAllRoleWithPrivilege")
             .then(response=>{
+                //将权限转化为id数组
+                response.data.forEach(item=>{
+                    item.privilege=item.privilege.map(p=>{
+                        return p.id
+                    })
+                })
                 this.roles = response.data;
             })
+
+            
+
         },
         //绑定角色
         toBindPrivilege(role){
-            alert(JSON.stringify(role));    
-        }
+            this.role = role;
+            this.visible=true;
+             
+        },
+        //加载权限信息
+        loadPrivileges(){
+            request.get("/privilege/findAllWithChildren")
+            .then(response=>{
+                this.privileges = response.data;
+            })
+        },
     }
 }
 </script>
