@@ -3,18 +3,17 @@
        <!-- 表格 -->
      <el-table :data="order"  style="width: 100%">
       <el-table-column  prop="id" label="编号" width="180"></el-table-column>
-      <el-table-column prop="content" label="订单" width="180"></el-table-column>
-      <el-table-column prop="date" label="订单时间"> </el-table-column>
-      <el-table-column prop="picture" label="图片"> </el-table-column>
-      <el-table-column prop="user.name" label="订单人"> </el-table-column>
-      <el-table-column prop="productId" label="产品编号"> </el-table-column>
+      <el-table-column prop="state" label="订单状态" width="180"></el-table-column>
+      <el-table-column prop="date" label="下单时间"> </el-table-column>
+      <el-table-column prop="product.title" label="产品"> </el-table-column>
+      <el-table-column prop="user.name" label="用户名"> </el-table-column>
        <el-table-column
       fixed="right"
       label="操作"
       align="center"
       width="150">
       <template slot-scope="scope">
-        <el-button @click="toDelete(scope.row.id)" type="text" size="small">撤回</el-button>
+        <el-button @click="toDelete(scope.row.id)" type="text" size="small">删除订单</el-button>
       </template>
     </el-table-column>
     </el-table>
@@ -35,7 +34,7 @@ export default {
    },
    methods:{
        reloadData(){
-                request.get('/order/cascadeFindAll')
+                request.get('/Order/cascadeFindAll')
         .then(result=>{
             this.order = result.data;
         })
@@ -47,7 +46,7 @@ export default {
           type: 'warning'
         }).then(() => {
           //交互
-              let url = "/order/deleteById"
+              let url = "/Order/deleteById"
               request.get(url,{params:{id:id}})
               .then(response=>{
                   //通知
