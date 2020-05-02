@@ -32,13 +32,14 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="visible = false">取 消</el-button>
-                <el-button type="primary" >确 定</el-button>
+                <el-button type="primary" @click="toBindPrivilegeHandler" >确 定</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 <script>
 import request from '@/utils/request'
+import qs from 'querystring'
 export default {
     data(){
         return{
@@ -85,6 +86,22 @@ export default {
                 this.privileges = response.data;
             })
         },
+        //权限绑定控制器，按下确定时触发
+        toBindPrivilegeHandler(){
+            request.request({
+                url:'/role/setPrivilegeToRole',
+                method:'post',
+                headers:{
+                    'Content-Type':'application/x-www-form-urlencoded'
+                },
+                data:qs.stringify(this.role)
+            })
+            .then(response=>{
+                this.visible=false;
+                this.$message({message:response.message,type:"success"})
+                this.loadRoles();
+            })
+        }
     }
 }
 </script>
