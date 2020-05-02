@@ -145,6 +145,32 @@ export const asyncRoutes = [
       }
     ]
   },
+  //评论管理
+  {
+    path: '/evaluate',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/pages/Evaluate/List'),
+        name: 'evaluate_list',
+        meta: { title: '评论列表', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  //订单管理
+  {
+    path: '/order',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/pages/Order/List'),
+        name: 'order_list',
+        meta: { title: '订单列表', icon: 'documentation', affix: true }
+      }
+    ]
+  },
    //用户管理路由
    {
     path: '/user',
@@ -171,6 +197,7 @@ export const asyncRoutes = [
       }
     ]
   },
+  //权限管理
   {
     path: '/privilege',
     component: Layout,
@@ -183,6 +210,7 @@ export const asyncRoutes = [
       }
     ]
   },
+  
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
