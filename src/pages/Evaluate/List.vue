@@ -10,7 +10,7 @@
       <el-table-column prop="content" label="评论" width="180"></el-table-column>
       <el-table-column prop="date" label="评论时间"> </el-table-column>
       <el-table-column prop="picture" label="图片"> </el-table-column>
-      <el-table-column prop="userId" label="评论人"> </el-table-column>
+      <el-table-column prop="user.name" label="评论人"> </el-table-column>
       <el-table-column prop="productId" label="产品编号"> </el-table-column>
        <el-table-column
       fixed="right"
@@ -39,7 +39,7 @@ export default {
    },
    methods:{
        reloadData(){
-                request.get('/evaluate/findAll')
+                request.get('/evaluate/cascadeFindAll')
         .then(result=>{
             this.evaluate = result.data;
         })

@@ -1,28 +1,20 @@
 <template>
     <div class = "order_list">
-        <!-- 按钮 -->
-       <div class = "btns">
-           <el-button type="primary" size="small" @click="toPulishPrder">发布订单</el-button>
-       </div>
        <!-- 表格 -->
      <el-table :data="order"  style="width: 100%">
       <el-table-column  prop="id" label="编号" width="180"></el-table-column>
-      <el-table-column prop="title" label="标题" width="180"></el-table-column>
-      <el-table-column prop="price" label="价格"> </el-table-column>
-      <el-table-column prop="media" label="url地址"> </el-table-column>
-      <el-table-column prop="state" label="订单属性"> </el-table-column>
-      <el-table-column prop="category.name" label="所属栏目"> </el-table-column>
-      <el-table-column prop="user.name" label="发布人"> </el-table-column>
-      <el-table-column prop="description" label="描述信息"> </el-table-column>
+      <el-table-column prop="content" label="订单" width="180"></el-table-column>
+      <el-table-column prop="date" label="订单时间"> </el-table-column>
+      <el-table-column prop="picture" label="图片"> </el-table-column>
+      <el-table-column prop="user.name" label="订单人"> </el-table-column>
+      <el-table-column prop="productId" label="产品编号"> </el-table-column>
        <el-table-column
       fixed="right"
       label="操作"
       align="center"
       width="150">
       <template slot-scope="scope">
-        <el-button @click="toReview(scope.row)" type="text" size="small">查看</el-button>
-        <el-button type="text" size="small" @click="toEdit(scope.row)">编辑</el-button>
-        <el-button @click="toDelete(scope.row.id)" type="text" size="small">删除</el-button>
+        <el-button @click="toDelete(scope.row.id)" type="text" size="small">撤回</el-button>
       </template>
     </el-table-column>
     </el-table>
@@ -43,13 +35,10 @@ export default {
    },
    methods:{
        reloadData(){
-                request.get('/order/findAllPrder')
+                request.get('/order/cascadeFindAll')
         .then(result=>{
             this.order = result.data;
         })
-       },
-       toReview(){
-
        },
        toDelete(id){
            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -71,14 +60,8 @@ export default {
               })
           
         })
-       },
-       toEdit(record){
-          this.$router.push({path:'/Prder/Editor',query:record})
-       },
-       toPulishPrder(){
-           //跳转到编辑订单界面
-           this.$router.push({path:'/Prder/Editor'})
        }
+       
    }
 }
 </script>
