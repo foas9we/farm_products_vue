@@ -15,9 +15,10 @@
             <el-table-column prop="postcode" label="邮政编码"></el-table-column>
             <el-table-column prop="register_time" label="注册日期"></el-table-column>
             <el-table-column prop="userface" label="头像"></el-table-column>
-            <el-table-column label="操作" aling="center" width="100">
+            <el-table-column label="操作" align="center" width="150" fixed="right">
                 <template v-slot="slot">
                     <el-button size="mini" type = "text" @click="toBindRole(slot.row)">绑定角色</el-button>
+                    <el-button size="mini" type = "text" @click="toDelete(slot.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -169,6 +170,29 @@ export default {
                     return false
                     }
                 })
+        },
+         //删除用户信息
+        toDelete(id){
+            
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          //交互
+              let url = "/baseUser/deleteById"
+              request.get(url,{params:{id:id}})
+              .then(response=>{
+                  //通知
+                  this.$message({
+                      message:response.message,
+                      type:"success"
+                  })
+                  //重载数据
+                  this.loadUsers();
+              })
+          
+        })
         }
     }
 }
