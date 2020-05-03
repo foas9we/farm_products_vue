@@ -2,7 +2,7 @@
     <div class="user_list">
         <!-- 按钮 -->
         <div class="btns">
-            <el-button type="primary" size="small">新增用户</el-button>
+            <el-button type="primary" size="small" @click="toAdd">新增用户</el-button>
         </div>
         <!-- 表格 -->
         <el-table :data="users" size = "small">
@@ -41,10 +41,44 @@
                 <el-button type="primary" @click="bindRoleHandler">确 定</el-button>
             </div>
         </el-dialog>
+        <!-- 模态框 -->
+        <!-- 新建用户模态框 -->
+        <el-dialog :title="title" :visible.sync="user_visible">
+            <el-form ref="user_form" :model="form" :rules="rules">
+                <el-form-item label="用户名" label-width="80px" prop="name">
+                <el-input v-model="form.name" autocomplete="off" />
+                </el-form-item>
+                <el-form-item label="密码" label-width="80px" prop="password">
+                <el-input v-model="form.password" autocomplete="off" />
+                </el-form-item>
+                <el-form-item label="性别" label-width="80px" prop="gender">
+                <el-radio-group v-model="form.gender">
+                    <el-radio label="男">男</el-radio>
+                    <el-radio label="女">女</el-radio>
+                </el-radio-group>
+                </el-form-item>
+                <el-form-item label="手机号" label-width="80px">
+                    <el-input v-model="form.phone" autocomplete="off" />
+                </el-form-item>
+                <el-form-item label="邮政编码" label-width="80px">
+                    <el-input v-model="form.postcode" autocomplete="off" />
+                </el-form-item>
+                <el-form-item label="出生日期" label-width="80px">
+                <el-date-picker v-model="form.birth" value-format="timestamp" type="date" placeholder="选择日期" />
+                </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button size="small" @click="user_visible = false">取 消</el-button>
+                    <el-button type="primary" size="small" @click="saveUserHandler">确 定</el-button>
+                </div>
+            </el-dialog>
+         <!-- 新建用户模态框 -->
+        
     </div>
 </template>
 <script>
 import request from '@/utils/request'
+import { get, post, del } from '@/utils/request'
 import qs from 'querystring'
 export default {
     data(){
@@ -54,6 +88,19 @@ export default {
             users:[],//所有的用户信息
             user:{},//当前用户
             roles:[],//所有的角色信息
+            user_visible:false,
+            title: '添加用户',
+            rules: {
+            name: [
+            { required: true, message: '请输入用户名', trigger: 'change' }
+            ],
+            password: [
+            { required: true, message: '请输入密码', trigger: 'change' }
+            ],
+            gender: [
+            { required: true, message: '请选择性别', trigger: 'change' }
+            ]
+        }
         }
     },
     created(){
@@ -101,6 +148,27 @@ export default {
                 this.$message({message:response.message,type:"success"})
                 this.loadUsers();
             })
+        },
+        //添加用户
+        toAdd(){
+           this.form={};
+           this.user_visible=true;     
+        },
+        //更新用户信息
+        saveUserHandler(){
+                this.$refs['user_form'].validate((valid) => {
+                    if (valid) {
+                    const url = '/baseUser/saveOrUpdate'
+                    post(url, this.form)
+                        .then(response => {
+                        this.user_visible = false
+                        this.$message({ message: response.message, type: 'success' })
+                        this.loadUsers()
+                        })
+                    } else {
+                    return false
+                    }
+                })
         }
     }
 }

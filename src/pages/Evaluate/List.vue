@@ -1,9 +1,5 @@
 <template>
     <div class = "evaluate_list">
-        <!-- 按钮 -->
-       <!-- <div class = "btns">
-           <el-button type="primary" size="small" @click="toPulishEvaluate">发布评论</el-button>
-       </div> -->
        <!-- 表格 -->
      <el-table :data="evaluate"  style="width: 100%">
       <el-table-column  prop="id" label="编号" width="180"></el-table-column>

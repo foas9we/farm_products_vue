@@ -64,6 +64,7 @@
 </template>
 <script>
 import request from '@/utils/request'
+import { get, del, post } from '@/utils/request'
 import qs from 'querystring'
 export default {
     data(){
@@ -106,19 +107,27 @@ export default {
         },
         //提交修改
         submitHandler() {
-            request.request({
-                url:'/privilege/saveOrUpdate',
-                method:'post',
-                headers:{
-                    'Content-Type':'application/x-www-form-urlencoded'
-                },
-                data:qs.stringify(this.form)
-            })
-            .then(response=>{
-                this.visible=false;
-                this.$message({message:response.message,type:"success"})
-                this.loadPrivileges();
-            })
+            // request.request({
+            //     url:'/privilege/saveOrUpdate',
+            //     method:'post',
+            //     headers:{
+            //         'Content-Type':'application/x-www-form-urlencoded'
+            //     },
+            //     data:qs.stringify(this.form)
+                //
+                this.$refs['privilege_form'].validate((valid) => {
+                    if (valid) {
+                    const url = '/privilege/saveOrUpdate'
+                    post(url, this.form)
+                        .then(response => {
+                        this.visible = false
+                        this.$message({ message: response.message, type: 'success' })
+                        this.loadPrivileges()
+                        })
+                    } else {
+                    return false
+                    }
+                })
         },
 
         //加载一级权限信息
