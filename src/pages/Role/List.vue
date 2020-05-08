@@ -10,7 +10,7 @@
             <el-table-column label="操作" aling="center" width="100">
                 <template v-slot="slot">
                     <el-button size="mini" type = "text" @click="toBindPrivilege(slot.row)">授权</el-button>
-                    <el-button size="mini" type = "text" @click="toDelete(slot.row.id)">删除</el-button>
+                    <el-button size="mini" type = "text" @click="toDelete(slot  .row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>

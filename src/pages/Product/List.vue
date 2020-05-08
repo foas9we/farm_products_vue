@@ -9,7 +9,13 @@
       <el-table-column  prop="id" label="编号" width="180"></el-table-column>
       <el-table-column prop="title" label="标题" width="180"></el-table-column>
       <el-table-column prop="price" label="价格"> </el-table-column>
-      <el-table-column prop="media" label="url地址"> </el-table-column>
+      <!-- <el-table-column prop="media" label="url地址"> </el-table-column> -->
+      <el-table-column  label="图片详情">
+        <template scope="scope">
+          <img :src="scope.row.media" width="40" height="40"/>
+        </template>
+
+      </el-table-column>
       <el-table-column prop="state" label="农产品属性"> </el-table-column>
       <el-table-column prop="category.name" label="所属栏目"> </el-table-column>
       <el-table-column prop="user.name" label="发布人"> </el-table-column>
@@ -20,7 +26,7 @@
       align="center"
       width="150">
       <template slot-scope="scope">
-        <el-button @click="toReview(scope.row)" type="text" size="small">查看</el-button>
+        <!-- <el-button @click="toReview(scope.row)" type="text" size="small">查看</el-button> -->
         <el-button type="text" size="small" @click="toEdit(scope.row)">编辑</el-button>
         <el-button @click="toDelete(scope.row.id)" type="text" size="small">下架</el-button>
       </template>
@@ -34,7 +40,9 @@ import request from '@/utils/request'
 export default {
     data(){
         return{
-            product:[]
+            product:[],
+            
+
         }
    },
 
@@ -48,9 +56,9 @@ export default {
             this.product = result.data;
         })
        },
-       toReview(){
+    //    toReview(){
 
-       },
+    //    },
        toDelete(id){
            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -69,7 +77,7 @@ export default {
                   //重载数据
                   this.reloadData();
               })
-          
+
         })
        },
        toEdit(record){

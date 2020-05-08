@@ -1,15 +1,16 @@
 <template>
     <div class="privilege_list">
         <div class="btns">
-            <el-button type="primary" size="small">新增权限</el-button>
+            <el-button type="primary" size="small" @click="toAdd">新增权限</el-button>
         </div>
         <!-- 表格 -->
         <el-table :data="privileges" size = "small" row-key="id" >
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="name" label="权限名"></el-table-column>
+            <el-table-column prop="description" label="描述"></el-table-column>
             <el-table-column prop="type" label="类型"></el-table-column>
             <el-table-column prop="route" label="路径"></el-table-column>
-            
+
             <el-table-column label="操作" aling="center" width="100">
                 <template v-slot="slot">
                     <el-button size="mini" type = "text" @click="toEdit(slot.row)">修改</el-button>
@@ -69,8 +70,8 @@ import qs from 'querystring'
 export default {
     data(){
         return{
-            privileges:[], 
-            paretnPrivileges:[],     
+            privileges:[],
+            paretnPrivileges:[],
             form: {},
             visible: false,
             title: '添加权限',
@@ -137,6 +138,11 @@ export default {
                 this.paretnPrivileges = response.data;
             })
         },
+
+        toAdd(){
+          this.form = {}
+          this.visible = true
+        }
     }
 }
 </script>
