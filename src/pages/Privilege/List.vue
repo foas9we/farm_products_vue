@@ -90,7 +90,7 @@ export default {
     },
     created(){
         this.loadPrivileges();
-        // this.loadParentPrivileges();
+        this.loadAllFist()
     },
     methods:{
         //加载权限信息
@@ -137,11 +137,17 @@ export default {
             .then(response=>{
                 this.paretnPrivileges = response.data;
             })
-        },
+        },  
 
         toAdd(){
           this.form = {}
           this.visible = true
+        },
+        loadAllFist(){
+          request.get("/privilege/findAllFirst")
+          .then(response=>{
+              this.paretnPrivileges = response.data;
+          })
         }
     }
 }

@@ -4,6 +4,16 @@
        <div class = "btns">
            <el-button type="primary" size="small" @click="toPulishProduct">发布农产品</el-button>
        </div>
+       <div class="search" >
+                   <el-select v-model="value" multiple  filterable="true" remote="true" reserve-keyword
+                       placeholder="请输入关键词"
+                       :remote-method="searchFor"
+                       :loading="loading"
+                   >
+                       <el-option  v-for="item in options" :key="item.id" :label="item.title" :value="item">
+                       </el-option>
+                   </el-select>
+               </div>
        <!-- 表格 -->
      <el-table :data="product"  style="width: 100%">
       <el-table-column  prop="id" label="编号" width="180"></el-table-column>
@@ -12,7 +22,7 @@
       <!-- <el-table-column prop="media" label="url地址"> </el-table-column> -->
       <el-table-column  label="图片详情">
         <template scope="scope">
-          <img :src="scope.row.media" width="40" height="40"/>
+          <img :src="scope.row.media" width="40" v-if="scope.row.media!==null" height="40"/>
         </template>
 
       </el-table-column>
@@ -41,8 +51,8 @@ export default {
     data(){
         return{
             product:[],
-            
-
+            options:[],
+            props:{multiple: true ,label:'name',value:'id',emitPath:false},
         }
    },
 
@@ -50,10 +60,18 @@ export default {
       this.reloadData();
    },
    methods:{
+     searchFor(value){
+        request.get("/product/findByName?name="+value)
+                  .then(response=>{
+                    this.product = response.data;
+
+                    })
+     },
        reloadData(){
                 request.get('/product/findAllProduct')
         .then(result=>{
             this.product = result.data;
+            this.options = result.data;
         })
        },
     //    toReview(){
@@ -91,5 +109,10 @@ export default {
 }
 </script>
 <style scoped>
-
+  .btns{
+    float:left;
+  }
+  .search{
+    float:right;
+  }
 </style>

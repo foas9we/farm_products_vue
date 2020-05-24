@@ -6,7 +6,7 @@
         <el-table :data="roles" size = "small">
             <el-table-column prop="id" label="编号"></el-table-column>
             <el-table-column prop="name" label="角色名"></el-table-column>
-            
+
             <el-table-column label="操作" aling="center" width="100">
                 <template v-slot="slot">
                     <el-button size="mini" type = "text" @click="toBindPrivilege(slot.row)">授权</el-button>
@@ -15,21 +15,21 @@
             </el-table-column>
         </el-table>
         <!-- 模态框 -->
-         
+
         <el-dialog title="授权" :visible.sync="visible">
-            {{role.privilege}}
+            
             <el-form >
             <el-form-item label="角色名" label-width="80px">
                 <strong>{{role.name}}</strong>
             </el-form-item>
             <el-form-item label="权限" label-width="80px">
-               <el-cascader-panel 
+               <el-cascader-panel
                     v-model="role.privilege"
                     :props="props"
-                    :options="privileges" 
+                    :options="privileges"
                     clearable />
             </el-form-item>
-           
+
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="visible = false">取 消</el-button>
@@ -63,7 +63,7 @@ export default {
             role:{},
             visible:false,
             privileges:[],
-            props:{multiple: true ,label:'name',value:'id',emitPath:false},
+            props:{multiple: true ,label:'name',value:'id',emitPath:false,checkStrictly: true},
             ids:[],
             role_visible:false,
             title:'添加角色',
@@ -73,7 +73,7 @@ export default {
                 { required: true, message: '请输入角色名称', trigger: 'change' }
                 ]
             }
-            
+
         }
     },
     created(){
@@ -94,14 +94,14 @@ export default {
                 this.roles = response.data;
             })
 
-            
+
 
         },
         //绑定角色
         toBindPrivilege(role){
             this.role = role;
             this.visible=true;
-             
+
         },
         //加载权限信息
         loadPrivileges(){
@@ -153,7 +153,7 @@ export default {
         },
         //删除角色信息
         toDelete(id){
-            
+
           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -171,7 +171,7 @@ export default {
                   //重载数据
                   this.loadRoles();
               })
-          
+
         })
         }
     }

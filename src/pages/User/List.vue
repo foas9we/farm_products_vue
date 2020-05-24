@@ -25,7 +25,7 @@
         <!-- 模态框 -->
          
         <el-dialog title="绑定角色" :visible.sync="visible">
-            {{user}}
+            
             <el-form >
             <el-form-item label="用户名" label-width="80px">
                 <strong>{{user.name}}</strong>

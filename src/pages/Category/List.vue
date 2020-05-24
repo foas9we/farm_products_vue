@@ -4,7 +4,7 @@
        <div class = "btns">
            <el-button type="primary" size="small" @click="toAdd">新增栏目</el-button>
            <el-button type="danger" size="small" @click="toBatchDelete">批量删除</el-button>
-           {{ids}}
+           
        </div>
        <!-- 表格 -->
      <el-table :data="category"  style="width: 100%" @selection-change="handleSelectionChange">
@@ -27,7 +27,7 @@
        <!-- 模态框 -->
        <el-dialog title="新增模态框信息" :visible.sync="dialogFormVisible">
             <el-form :model="form">
-                {{form}}
+               
                 <el-form-item label="栏目名称" label-width="80px">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
